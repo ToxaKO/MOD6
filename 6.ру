@@ -1,0 +1,29 @@
+import time
+from threading import Thread
+from datetime import datetime
+
+t1 = time.time()
+def get_thread(thread_name):
+	time.sleep(1)
+	print(f'Thread № {thread_name} started!')
+lst = ['john','bill','tom','jack','barbara']
+# последовательно
+for i in range(len(lst)):
+	get_thread(lst[i])
+
+
+print('Последовательно: ', time.time() - t1)
+
+# параллельно
+t2 = time.time()
+
+threads = [Thread(target = get_thread, args=(lst[i],)) for i in range(len(lst))]
+
+for t in threads:
+	t.start()
+
+for t in threads:
+	t.join()
+
+print('Параллельно: ', time.time() - t2)
+
